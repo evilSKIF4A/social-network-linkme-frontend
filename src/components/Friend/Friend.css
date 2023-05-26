@@ -1,0 +1,17 @@
+.bd-radius {
+  border-radius: 50%;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.color-black {
+  color: black;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,46 @@
+.icon {
+  width: 45px;
+  height: 100%;
+}
+
+.bd-style-solid {
+  border-style: solid;
+}
+
+.bd-color {
+  border-color: black;
+}
+
+.bd-radius {
+  border-radius: 1rem;
+}
+
+.scroll-chat {
+  height: 450px; /* высота нашего блока */
+  width: 700px; /* ширина нашего блока */
+  overflow-y: auto;
+}
+
+.box-message {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-message {
+  width: 80%;
+  height: 90px;
+  padding: 10px;
+  resize: none;
+}
+
+.button-message {
+  width: 110px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: teal;
+  color: white;
+}

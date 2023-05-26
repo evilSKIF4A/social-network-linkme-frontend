@@ -1,0 +1,32 @@
+p {
+  max-width: 300px;
+}
+
+.own {
+  margin-right: 10px;
+}
+
+.not-own {
+  margin-left: 10px;
+}
+
+.text-size {
+  font-size: 15px;
+}
+
+.own-color {
+  background-color: rgb(242, 247, 247);
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.not-own-color {
+  background-color: rgb(11, 95, 239);
+  color: white;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.bd-radius {
+  border-radius: 50%;
+}

@@ -1,0 +1,60 @@
+.inline-flex {
+  display: inline-flex;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.bd-solid {
+  border: solid;
+}
+
+.w-300 {
+  width: 300px;
+}
+
+.h-300 {
+  height: 300px;
+}
+
+.bd-color {
+  border-color: rgb(174, 185, 185);
+}
+
+.bd-radius {
+  border-radius: 1rem;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.w-auto {
+  width: auto;
+}
+.h-auto {
+  height: auto;
+}
+
+.def-btn {
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-friend {
+  background-color: rgb(4, 91, 91);
+  color: white;
+}
+
+.btn-sub {
+  background-color: rgb(88, 103, 103);
+  color: white;
+}
+
+.btn-new {
+  background-color: rgb(4, 91, 56);
+  color: white;
+}
