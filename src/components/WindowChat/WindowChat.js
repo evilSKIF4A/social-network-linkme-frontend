@@ -46,6 +46,7 @@ function WindowChat({ ownId, chatId, socket }) {
   }, [messages]);
 
   const handleSubmit = async (e) => {
+    if (newMessage.trim() === "") return;
     e.preventDefault();
     const receiverId =
       dataChat.user1._id === ownId ? dataChat.user2._id : dataChat.user1._id;
