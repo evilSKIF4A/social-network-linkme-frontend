@@ -8,6 +8,7 @@ import noAvatar from "../../static/img/no-avatar.png";
 import "./UserPage.css";
 import instance from "../../axios";
 import Loading from "../../components/Loading/Loading";
+import socket from "../../socket";
 
 export default function UserPage() {
   const { userId } = useParams();
@@ -71,9 +72,15 @@ export default function UserPage() {
 
   const handleNewChat = async (e) => {
     try {
-      await instance.post("/chat/create", {
+      const newChat = await instance.post("/chat/create", {
         user2: userId,
       });
+
+      socket.emit("setNewConversation", {
+        receiverId: userId,
+        chatId: newChat.data._id,
+      });
+
       navigate("/chats");
       window.location.reload();
     } catch (err) {
