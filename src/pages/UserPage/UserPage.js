@@ -20,6 +20,14 @@ export default function UserPage() {
   const [isFriend, setIsFriend] = useState(false); // мой друг
   const [isSubscriber, setIsSubscriber] = useState(false); // мой подписчик
   const [isSubscription, setIsSubscription] = useState(false); // я подписан
+  const [isOnline, setIsOnline] = useState(false);
+
+  React.useEffect(() => {
+    userData && socket.emit("addUser", userData?._id);
+    socket.on("getUsers", (users) => {
+      setIsOnline(users.find((user) => user.userId === userId));
+    });
+  }, [userData]);
 
   React.useEffect(() => {
     const getFriend = async () => {
@@ -181,7 +189,8 @@ export default function UserPage() {
                 </div>
                 <div className="ms-5">
                   <h3>
-                    {userData.firstName} {userData.lastName}
+                    {userData.firstName} {userData.lastName}{" "}
+                    {isOnline ? "🟢" : "🔴"}
                   </h3>
                 </div>
               </div>
