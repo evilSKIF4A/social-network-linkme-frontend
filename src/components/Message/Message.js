@@ -44,7 +44,16 @@ export default function Message({
               }
             >
               <p className="small p-2 ms-1 mb-1 rounded-3 text-size">
-                {message.message}
+                {message.message.split("<br>").map((mes, index) => {
+                  if (mes) {
+                    return (
+                      <span key={index}>
+                        {mes}
+                        <br />
+                      </span>
+                    );
+                  }
+                })}
               </p>
             </div>
             <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
