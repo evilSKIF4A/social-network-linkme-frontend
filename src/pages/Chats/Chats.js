@@ -13,6 +13,7 @@ function Chats() {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [newConversation, setNewConversation] = useState(null);
 
   React.useEffect(() => {
     userData && socket.emit("addUser", userData?._id);
@@ -20,6 +21,16 @@ function Chats() {
       setOnlineUsers(users);
     });
   }, [userData]);
+
+  React.useEffect(() => {
+    socket.on("getNewConversation", (data) => {
+      setNewConversation(data.chatId);
+    });
+  }, [newConversation]);
+
+  React.useEffect(() => {
+    newConversation && setConversations((prev) => [...prev, newConversation]);
+  }, [newConversation]);
 
   React.useEffect(() => {
     setConversations(userData?.chats);
