@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import "./WindowChat.css";
 import Message from "../Message/Message";
+import Emoji from "../Emoji/Emoji";
 import instance from "../../axios";
 
 function WindowChat({ ownId, chatId, socket }) {
   const scrollRef = useRef();
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+
+  const [currentEmoji, setCurrentEmoji] = useState("");
 
   const [dataChat, setDataChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -23,6 +26,10 @@ function WindowChat({ ownId, chatId, socket }) {
     };
     getDataChat();
   }, []);
+
+  React.useEffect(() => {
+    setNewMessage(newMessage + currentEmoji);
+  }, [currentEmoji]);
 
   React.useEffect(() => {
     socket.on("getMessage", (data) => {
@@ -106,9 +113,12 @@ function WindowChat({ ownId, chatId, socket }) {
           onChange={(e) => setNewMessage(e.target.value)}
           value={newMessage}
         ></textarea>
-        <button className="button-message" onClick={handleSubmit}>
-          Отправить
-        </button>
+        <div>
+          <Emoji setCurrentEmoji={setCurrentEmoji} />
+          <button className="button-message mb-2 mt-2" onClick={handleSubmit}>
+            Отправить
+          </button>
+        </div>
       </div>
     </div>
   );
