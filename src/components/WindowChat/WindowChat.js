@@ -46,8 +46,8 @@ function WindowChat({ ownId, chatId, socket }) {
   }, [messages]);
 
   const handleSubmit = async (e) => {
-    if (newMessage.trim() === "") return;
     e.preventDefault();
+    if (newMessage.trim() === "") return;
     const receiverId =
       dataChat.user1._id === ownId ? dataChat.user2._id : dataChat.user1._id;
 
@@ -59,7 +59,10 @@ function WindowChat({ ownId, chatId, socket }) {
 
     try {
       const message = await instance.post(
-        `/message/post/${chatId}/${ownId}/${newMessage}`
+        `/message/post/${chatId}/${ownId}/${newMessage.replaceAll(
+          "\n",
+          "<br>"
+        )}`
       );
       setMessages([...messages, message.data]);
       setNewMessage("");
