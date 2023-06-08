@@ -45,7 +45,7 @@ export default function Conversation({ ownId, chatId, onlineUsers }) {
                   {dataFriend.firstName} {dataFriend.lastName}
                 </p>
                 <p className="small text-muted max-width">
-                  {lastMessage && lastMessage.message}
+                  {lastMessage && lastMessage.message.replaceAll("<br>", " ")}
                 </p>
               </div>
             </div>
@@ -53,7 +53,6 @@ export default function Conversation({ ownId, chatId, onlineUsers }) {
               <p className="small text-muted mb-1">
                 {lastMessage && format(lastMessage.createdAt)}
               </p>
-              {/* <span className="badge bg-danger rounded-pill float-end">3</span> */}
             </div>
           </div>
         </li>
