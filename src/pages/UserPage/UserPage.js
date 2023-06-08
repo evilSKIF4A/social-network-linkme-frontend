@@ -23,11 +23,11 @@ export default function UserPage() {
   const [isOnline, setIsOnline] = useState(false);
 
   React.useEffect(() => {
-    userData && socket.emit("addUser", userData?._id);
+    currentUser && socket.emit("addUser", currentUser?._id);
     socket.on("getUsers", (users) => {
       setIsOnline(users.find((user) => user.userId === userId));
     });
-  }, [userData]);
+  }, [currentUser]);
 
   React.useEffect(() => {
     const getFriend = async () => {
@@ -188,10 +188,15 @@ export default function UserPage() {
                   </div>
                 </div>
                 <div className="ms-5">
-                  <h3>
-                    {userData.firstName} {userData.lastName}{" "}
-                    {isOnline ? "🟢" : "🔴"}
-                  </h3>
+                  <div>
+                    <h3>
+                      {userData.firstName} {userData.lastName}{" "}
+                      {isOnline ? "🟢" : "🔴"}
+                    </h3>
+                  </div>
+                  <div>
+                    <p>{userData.description}</p>
+                  </div>
                 </div>
               </div>
             </div>
