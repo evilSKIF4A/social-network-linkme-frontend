@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import "./MyPage.css";
 import { useSelector } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
@@ -10,6 +10,8 @@ import Loading from "../../components/Loading/Loading";
 
 export default function MyPage() {
   const userData = useSelector((state) => state.auth.data);
+
+  const [newDescription, setNewDescription] = useState("");
 
   const handleFoto = async () => {
     const avatarUrl = prompt("Введите ссылку на фотографию...", "");
@@ -29,6 +31,17 @@ export default function MyPage() {
       return;
     }
     alert("Пустая строка");
+  };
+
+  const handelSubmitDescription = async (e) => {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      try {
+        await instance.post(`/update/description/${newDescription}`);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   return (
@@ -76,9 +89,21 @@ export default function MyPage() {
                 </div>
               </div>
               <div className="ms-5">
-                <h3>
-                  {userData.firstName} {userData.lastName}
-                </h3>
+                <div>
+                  <h3>
+                    {userData.firstName} {userData.lastName}
+                  </h3>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    onKeyUp={handelSubmitDescription}
+                    onChange={(e) => setNewDescription(e.target.value)}
+                    value={
+                      newDescription ? newDescription : userData?.description
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>
