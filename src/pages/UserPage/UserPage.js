@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { selectIsAuth } from "../../redux/slices/auth";
 import Navbar from "../../components/Navbar/Navbar";
 import noAvatar from "../../static/img/no-avatar.png";
+import WindowPost from "../../components/WindowPost/WindowPost";
+import Post from "../../components/Post/Post";
 import "./UserPage.css";
 import instance from "../../axios";
 import Loading from "../../components/Loading/Loading";
@@ -21,6 +23,7 @@ export default function UserPage() {
   const [isSubscriber, setIsSubscriber] = useState(false); // мой подписчик
   const [isSubscription, setIsSubscription] = useState(false); // я подписан
   const [isOnline, setIsOnline] = useState(false);
+  const [posts, setPosts] = useState([]);
 
   React.useEffect(() => {
     currentUser && socket.emit("addUser", currentUser?._id);
@@ -34,12 +37,17 @@ export default function UserPage() {
       try {
         const data = await instance.get(`/users/${userId}`);
         setUserData(data?.data);
+        setPosts(userData?.posts);
       } catch (err) {
         console.log(err);
       }
     };
     getFriend();
   }, [userData]);
+
+  // React.useEffect(() => {
+  //   setPosts(userData?.posts);
+  // }, [userData]);
 
   React.useEffect(() => {
     setIsFriend(currentUser?.friends.includes(userId));
@@ -188,15 +196,28 @@ export default function UserPage() {
                   </div>
                 </div>
                 <div className="ms-5">
-                  <div>
-                    <h3>
-                      {userData.firstName} {userData.lastName}{" "}
-                      {isOnline ? "🟢" : "🔴"}
-                    </h3>
+                  <div className="w-300 h-300">
+                    <div>
+                      <h3>
+                        {userData.firstName} {userData.lastName}{" "}
+                        {isOnline ? "🟢" : "🔴"}
+                      </h3>
+                    </div>
+                    <div>
+                      <p>{userData.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p>{userData.description}</p>
-                  </div>
+                  <WindowPost
+                    userId={userData?._id}
+                    authorId={currentUser?._id}
+                    setPosts={setPosts}
+                  />
+                  {posts
+                    ?.slice(posts.length - 5, posts.length)
+                    .reverse()
+                    .map((postId) => {
+                      return <Post key={postId} postId={postId} />;
+                    })}
                 </div>
               </div>
             </div>

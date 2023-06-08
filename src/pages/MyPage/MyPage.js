@@ -7,11 +7,18 @@ import Friend from "../../components/Friend/Friend";
 import noAvatar from "../../static/img/no-avatar.png";
 import instance from "../../axios";
 import Loading from "../../components/Loading/Loading";
+import WindowPost from "../../components/WindowPost/WindowPost";
+import Post from "../../components/Post/Post";
 
 export default function MyPage() {
   const userData = useSelector((state) => state.auth.data);
 
   const [newDescription, setNewDescription] = useState("");
+  const [posts, setPosts] = useState([]);
+
+  React.useEffect(() => {
+    setPosts(userData?.posts);
+  }, [userData]);
 
   const handleFoto = async () => {
     const avatarUrl = prompt("Введите ссылку на фотографию...", "");
@@ -52,7 +59,7 @@ export default function MyPage() {
           <div className="container d-flex aling-items-center justify-content-center">
             <div className="inline-flex">
               <div>
-                <div className="w-200 h-200 mt-2 mb-3">
+                <div className="w-300 h-300 mt-2 mb-3">
                   <img
                     className=" bd-radius"
                     src={userData.avatarUrl ? userData.avatarUrl : noAvatar}
@@ -89,21 +96,35 @@ export default function MyPage() {
                 </div>
               </div>
               <div className="ms-5">
-                <div>
-                  <h3>
-                    {userData.firstName} {userData.lastName}
-                  </h3>
+                <div className="w-300 h-300">
+                  <div>
+                    <h3>
+                      {userData.firstName} {userData.lastName}
+                    </h3>
+                  </div>
+                  <div>
+                    <input
+                      className="status"
+                      type="text"
+                      onKeyUp={handelSubmitDescription}
+                      onChange={(e) => setNewDescription(e.target.value)}
+                      value={
+                        newDescription ? newDescription : userData?.description
+                      }
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input
-                    type="text"
-                    onKeyUp={handelSubmitDescription}
-                    onChange={(e) => setNewDescription(e.target.value)}
-                    value={
-                      newDescription ? newDescription : userData?.description
-                    }
-                  />
-                </div>
+                <WindowPost
+                  userId={userData?._id}
+                  authorId={userData?._id}
+                  setPosts={setPosts}
+                />
+                {posts
+                  ?.slice(posts.length - 5, posts.length)
+                  .reverse()
+                  .map((postId) => {
+                    return <Post key={postId} postId={postId} />;
+                  })}
               </div>
             </div>
           </div>

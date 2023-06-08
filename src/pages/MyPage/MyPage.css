@@ -49,3 +49,9 @@
 .btn-foto:hover {
   background-color: brown;
 }
+
+.status {
+  border-style: none;
+  cursor: pointer;
+  color: grey;
+}
